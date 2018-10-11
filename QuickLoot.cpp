@@ -541,7 +541,7 @@ QuickLoot::Update()
 	//Dbg_PrintItems();
 	//D_MSG(" === END ITEMS POST SORT");
 
-#if 1
+#if 0
 	InvokeScaleform_Open();
 
 	flags_.Set(kQuickLoot_RequestUpdate);
@@ -579,6 +579,7 @@ QuickLoot::Dbg_PrintItems()
 	_MESSAGE("=== DUMP CONTAINER ===");
 	_MESSAGE("%p [%s] numItems=%d owner=%p", containerRef_->formID, CALL_MEMBER_FN(containerRef_,GetReferenceName)(), items_.count, (ownerForm_ ? ownerForm_->formID : 0));
 
+	/*
 	ItemData* it;
 	UInt32 idx = 0;
 	while(traverse(items_,&idx, &it))
@@ -588,6 +589,23 @@ QuickLoot::Dbg_PrintItems()
 
 		_MESSAGE("    %p (%X) [%s], count=%d, icon=%s, priority=%d isStolen=%d",
 			pEntry, 
+			form ? form->formID : 0xBAADC0DE,
+			it->GetName(),
+			it->GetCount(),
+			it->GetIcon(),
+			it->priority,
+			it->IsStolen()
+		);
+	}
+	*/
+	for (UInt32 i = 0; i < items_.count; i++) {
+		ItemData* it = &items_[i];
+
+		InventoryEntryData *pEntry = it->pEntry;
+		TESForm *form = pEntry ? pEntry->type : nullptr;
+
+		_MESSAGE("    %p (%X) [%s], count=%d, icon=%s, priority=%d isStolen=%d",
+			pEntry,
 			form ? form->formID : 0xBAADC0DE,
 			it->GetName(),
 			it->GetCount(),

@@ -1,3 +1,4 @@
 *.exe
 *.dll
+*.vcxproj.user
 x64/
