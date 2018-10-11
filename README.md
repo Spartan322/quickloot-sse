@@ -1,15 +1,22 @@
 # quickloot-sse
-[WIP] Port of [Quick Loot by himika](https://www.nexusmods.com/skyrim/mods/73096/) to Skyrim: Special Edition
+[WIP] Skyrim: Special Edition port of [Quick Loot by himika](https://www.nexusmods.com/skyrim/mods/73096/).
 
-This is only for the skse plugin portion of the mod, if all goes well the flash portion will not have to change.
+This is only for the SKSE plugin portion of the mod, if all goes well the flash portion will not have to change.
 
-## How to compile the dll (current skse version: 2.0.4)
- - Download and install skse64 source.
- - Go to skse64.sln directory.
- - Clone this repository into directory
+Want to help out? Join us at https://discord.gg/gU9nNuf.
+
+## Current state
+ - Fixed memory addresses for latest Skyrim SE build
+ - Loads container contents and shows them in console
+ - **Help wanted**: calls to show/hide UI
+
+## Development (current SKSE version: 2.0.10)
+ - Download and install SKSE64 source
+ - Clone this repository into src/skse64/
  - Add QuickLoot_SSE.vcxproj to skse64.sln
  - Should now be able to compile the dll
 
-## If you want to contribute...
- - Please do not modify the skse core (like the original author did). I dont want to run into having to maintain our own modified skse.
- - 
+Note: does not yet work if the dll is installed using a mod manager tool.
+
+## Contributing
+ - Please do not modify the SKSE core (like the original author did).
