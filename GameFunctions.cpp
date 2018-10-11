@@ -1,10 +1,6 @@
 #include "GameFunctions.h"
 
-
-/* For Skyrim SE v1.5.16 */
 // 1.5.16 = +0x80 bytes from 1.5.3
-
-
 
 /*
 Ref:
@@ -135,9 +131,21 @@ SkyrimSE.exe+1A1920 - 40 53                 - push rbx
 */
 RelocAddr<TESForm_GetWeight_t*>  TESForm_GetWeight (0x001A1920); // 1_5_53
 
-// 48 85 D2 74 2F 8B 4B 0C FF C9 8B 44 24 48 48 23 C8 48 8D 04 49 48 8D 04 C2 48 83 78 10 00 74 14 
-// -0x4C
-RelocAddr<TESForm_LookupFormByID_t*>   TESForm_LookupFormByID (0x00194300 + 0x80);
+/*
+Ref:
+48 85 D2 74 2F 8B 4B 0C FF C9 8B 44 24 48 48 23 C8 48 8D 04 49 48 8D 04 C2 48 83 78 10 00 74 14
+-0x4C
+
+1_5_53 NOTES:
+
+Found:
+48 85 D2 74 2F 8B 4B 0C FF C9 8B 44 24 48 48 23 C8 48 8D 04 49 48 8D 04 C2 48 83 78 10 00 74 14
+at address 7FF7A671446C
+
+-0x4C:
+SkyrimSE.exe+194420 - 40 57                 - push rdi
+*/
+RelocAddr<TESForm_LookupFormByID_t*>   TESForm_LookupFormByID (0x00194420); // 1_5_53
 
 /*
 00007FF7295D72F0 | 48 8D 15 B9 61 2F 01         | lea rdx,qword ptr ds:[7FF72A8CD4B0]                      | 7FF72A8CD4B0:"Found ReferenceHandle extra on invalid %s ref '%s' (%08X)"
@@ -238,10 +246,14 @@ Ref:
 
 1_5_53 NOTES:
 
-TODO
-*/
+Found:
+33 FF 44 8B E7 48 8B 49 08 0F B7 D7 66 89 55 40 48 85 C9 74 15 8B C7 80 79 1A 3E
+at address 7FF7A6769FB2 / SkyrimSE.exe+1E9FB2
 
-RelocAddr<ECCData_InitContainer_t*> ECCData_InitContainer (0x001E9E70 + 0x80);
+-0x32:
+SkyrimSE.exe+1E9F80 - 40 55                 - push rbp
+*/
+RelocAddr<ECCData_InitContainer_t*> ECCData_InitContainer (0x001E9F80); // 1_5_53
 
 
 /*
@@ -251,9 +263,19 @@ first entry
 
 1_5_53 NOTES:
 
-TODO
+Found:
+65 48 8B 04 25 58 00 00 00 B9 68 07 00 00 4E 8B 34 C0 4C 03 F1 41 8B 3E 89 7C 24 60 41 C7 06 61 00 00 00 49 8D 5F 10 48 89 5C 24 68 48 8B CB
+at address 7FF7A668F7D7 - 7FF7A668F7EF
+
+SkyrimSE.exe+10F7D7 - 65 48 8B 04 25 58000000  - mov rax,gs:[00000058] { 88 }
+SkyrimSE.exe+10F7E0 - B9 68070000           - mov ecx,00000768 { 1896 }
+SkyrimSE.exe+10F7E5 - 4E 8B 34 C0           - mov r14,[rax+r8*8]
+SkyrimSE.exe+10F7E9 - 4C 03 F1              - add r14,rcx
+SkyrimSE.exe+10F7EC - 41 8B 3E              - mov edi,[r14]
+SkyrimSE.exe+10F7EF - 89 7C 24 60           - mov [rsp+60],edi
+
 */
-RelocAddr<BaseExtraList_SetInventoryChanges_t*> BaseExtraList_SetInventoryChanges (0x0010F6C0 + 0x80);
+RelocAddr<BaseExtraList_SetInventoryChanges_t*> BaseExtraList_SetInventoryChanges (0x0010F7D7); // 1_5_53
 
 
 /*
@@ -263,9 +285,14 @@ Ref:
 
 1_5_53 NOTES:
 
-TODO
+Found:
+48 85 FF 74 06 0F B7 47 10 EB 05 B8 01 00 00 00 48 8B 5C 24 48 48 83 C4 30 5F C3
+at address 7FF7A66939E7
+
+-0x47:
+SkyrimSE.exe+1139A0 - 40 57                 - push rdi
 */
-RelocAddr<BaseExtraList_GetItemCount_t*>	    BaseExtraList_GetItemCount (0x001138B0 + 0x80);
+RelocAddr<BaseExtraList_GetItemCount_t*>	    BaseExtraList_GetItemCount (0x001139A0); // 1_5_53
 
 /*
 Ref:
@@ -274,9 +301,13 @@ first match
 
 1_5_53 NOTES:
 
-TODO
+Found:
+48 8B 59 08 48 85 DB 74 22 48 8B 1B 48 85 DB 74 1A 48 8B CB
+at address 7FF7A6756816
+
+SkyrimSE.exe+1D6816 - 48 8B 59 08           - mov rbx,[rcx+08]
 */
-RelocAddr<InventoryEntryData_GetOwner_t*>		 InventoryEntryData_GetOwner (0x001D6750 + 0x80);
+RelocAddr<InventoryEntryData_GetOwner_t*>		 InventoryEntryData_GetOwner (0x001D6816); // 1_5_53
 
 /*
 Ref:
@@ -285,9 +316,14 @@ Ref:
 
 1_5_53 NOTES:
 
-TODO
+Found:
+48 8B F0 48 85 C0 75 04 48 8B 73 40 33 C0 80 7E 1A 2B 48 0F 44 C6 48 3B EE 0F 84 80 00 00 00 80 7D 1A 0B
+at address 7FF7A67577CD - 7FF7A67577E5
+
+-0x4D:
+SkyrimSE.exe+1D7780 - 48 89 5C 24 10        - mov [rsp+10],rbx
 */
-RelocAddr<InventoryEntryData_IsOwnedBy_t*>		InventoryEntryData_IsOwnedBy (0x001D76C0 + 0x80);
+RelocAddr<InventoryEntryData_IsOwnedBy_t*>		InventoryEntryData_IsOwnedBy (0x001D7780); // 1_5_53
 
 /*
 Ref:
@@ -296,9 +332,14 @@ Ref:
 
 1_5_53 NOTES:
 
-TODO
+Found:
+48 8B 59 08 40 32 FF 48 85 DB 74 4A 48 89 74 24 30 0F 1F 44 00 00 48 83 7B 08 00 75 06
+at address 7FF7A6756D9A
+
+-0xA:
+SkyrimSE.exe+1D6D90 - 48 89 5C 24 10        - mov [rsp+10],rbx
 */
-RelocAddr<InventoryEntryData_IsQuestItem_t*>    InventoryEntryData_IsQuestItem (0x001D6CD0 + 0x80);
+RelocAddr<InventoryEntryData_IsQuestItem_t*>    InventoryEntryData_IsQuestItem (0x001D6D90); // 1_5_53
 
 /*
 Ref:
@@ -307,6 +348,11 @@ Ref:
 
 1_5_53 NOTES:
 
-TODO
+Found:
+49 89 5B 10 49 89 73 18 33 C0 49 89 43 D8
+at address 7FF7A6681EC0
+
+-0x10:
+SkyrimSE.exe+101EB0 - 4C 8B DC              - mov r11,rsp
 */
-RelocAddr<MagicItem_GetCostliestEffectItem_t*>	 MagicItem_GetCostliestEffectItem (0x00101DC0 + 0x80);
+RelocAddr<MagicItem_GetCostliestEffectItem_t*>	 MagicItem_GetCostliestEffectItem (0x00101EB0); // 1_5_53
