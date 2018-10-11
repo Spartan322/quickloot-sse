@@ -4,14 +4,15 @@
 /* For Skyrim SE v1.5.16 */
 // 1.5.16 = +0x80 bytes from 1.5.3
 
-// \x33\xDB\x41\x0F\xB6\xF0\x8B\xFB\x48\x85\xC0\x74\x1E
 
-// xxxxxxxxxxxxx
-// -0x13
 
 /*
-1_5_53 NOTES:
+Ref:
 33 DB 41 0F B6 F0 8B FB 48 85 C0 74 1E
+xxxxxxxxxxxxx
+-0x13
+
+1_5_53 NOTES:
 Address: 0x7FF7A680E453
 
 SkyrimSE.exe+28E453 - 33 DB                 - xor ebx,ebx
@@ -20,8 +21,11 @@ SkyrimSE.exe+28E459 - 8B FB                 - mov edi,ebx
 SkyrimSE.exe+28E45B - 48 85 C0              - test rax,rax
 SkyrimSE.exe+28E45E - 74 1E                 - je SkyrimSE.exe+28E47E
 
+-0x13, don't know the original purpose of this but it seems to lead to which seems about right.
+SkyrimSE.exe+28E440 - 48 89 5C 24 08        - mov [rsp+08],rbx
+
 */
-RelocAddr<TESObjectREFR_GetInventoryItemCount_t*> TESObjectREFR_GetInventoryItemCount (0x0028E320 + 0x80);
+RelocAddr<TESObjectREFR_GetInventoryItemCount_t*> TESObjectREFR_GetInventoryItemCount (0x0028E440); // 1_5_53
 
 /*
 00007FF644240DC7 | 48 C7 44 24 30 00 00 00 00   | mov qword ptr ss:[rsp+30],0                              |
@@ -59,7 +63,7 @@ RelocAddr<TESObjectREFR_GetInventoryItemCount_t*> TESObjectREFR_GetInventoryItem
 SkyrimSE.exe+982BE7 - 48 C7 44 24 30 00000000 - mov qword ptr [rsp+30],00000000 { 0 }
 SkyrimSE.exe+982BF0 - 48 8D 54 24 30        - lea rdx,[rsp+30]
 SkyrimSE.exe+982BF5 - 48 8B C8              - mov rcx,rax
-SkyrimSE.exe+982BF8 - E8 E30689FF           - call SkyrimSE.exe+2132E0									   | < =================== TESObjectREFR_LookupRefByHandle
+SkyrimSE.exe+982BF8 - E8 E30689FF           - call SkyrimSE.exe+2132E0									   | < =================== TESObjectREFR_LookupRefByHandle SkyrimSE.exe+2132E0
 SkyrimSE.exe+982BFD - 90                    - nop
 SkyrimSE.exe+982BFE - 48 8B 5C 24 30        - mov rbx,[rsp+30]
 SkyrimSE.exe+982C03 - 48 85 DB              - test rbx,rbx
@@ -85,17 +89,54 @@ SkyrimSE.exe+982C4E - 48 8D 15 EB86D700     - lea rdx,[SkyrimSE.exe+16FB340] { [
 SkyrimSE.exe+982C55 - 48 8B CF              - mov rcx,rdi
 SkyrimSE.exe+982C58 - FF 50 10              - call qword ptr [rax+10]
 */
-RelocAddr<TESObjectREFR_LookupRefByHandle_t*>     TESObjectREFR_LookupRefByHandle   (0x002131C0 + 0x80);
+RelocAddr<TESObjectREFR_LookupRefByHandle_t*>     TESObjectREFR_LookupRefByHandle   (0x002132E0); // 1_5_53
 
-// \x48\x0F\x44\xD6\x48\x85\xD2\x0F\x85\x00\x00\x00\x00\x48\x85\xC0\x0F\x85
-// xxxxxxxxx????xxxxx
-// -0x2E
-RelocAddr<TESForm_GetOwner_t*> TESForm_GetOwner (0x002A6740 + 0x80);
 
-// 48 85 C9 0F 84 C1 00 00 00 0F B6 41 1A 83 C0 E9 83 F8 1D 0F 87 B1 00 00 00 -0x16
-RelocAddr<TESForm_GetWeight_t*>  TESForm_GetWeight (0x001A1800 + 0x80);
 
-// 48 85 D2 74 2F 8B 4B 0C FF C9 8B 44 24 48 48 23 C8 48 8D 04 49 48 8D 04 C2 48 83 78 10 00 74 14 -0x4C
+/*
+Ref:
+48 0F 44 D6 48 85 D2 0F 85 00 00 00 00 48 85 C0 0F 85
+xxxxxxxxx????xxxxx
+-0x2E
+
+1_5_53 NOTES:
+
+Reference:
+48 0F 44 D6 48 85 D2 0F 85 XX XX XX XX 48 85 C0 0F 85
+
+Found:
+48 0F 44 D6 48 85 D2 0F 85 BE 00 00 00 48 85 C0 0F 85
+at address 7FF7A682688E / SkyrimSE.exe+2A688E
+
+-0x2E:
+SkyrimSE.exe+2A6860 - 40 57                 - push rdi
+
+*/
+RelocAddr<TESForm_GetOwner_t*> TESForm_GetOwner (0x002A6860); // 1_5_53
+
+
+
+/*
+Ref:
+48 85 C9 0F 84 C1 00 00 00 0F B6 41 1A 83 C0 E9 83 F8 1D 0F 87 B1 00 00 00
+-0x16
+
+1_5_53 NOTES:
+
+Reference:
+48 85 C9 0F 84 C1 00 00 00 0F B6 41 1A 83 C0 E9 83 F8 1D 0F 87 B1 00 00 00
+
+Found:
+48 85 C9 0F 84 C1 00 00 00 0F B6 41 1A 83 C0 E9 83 F8 1D 0F 87 B1 00 00 00
+at address 7FF7A6721936 / SkyrimSE.exe+1A1936
+
+-0x16:
+SkyrimSE.exe+1A1920 - 40 53                 - push rbx
+*/
+RelocAddr<TESForm_GetWeight_t*>  TESForm_GetWeight (0x001A1920); // 1_5_53
+
+// 48 85 D2 74 2F 8B 4B 0C FF C9 8B 44 24 48 48 23 C8 48 8D 04 49 48 8D 04 C2 48 83 78 10 00 74 14 
+// -0x4C
 RelocAddr<TESForm_LookupFormByID_t*>   TESForm_LookupFormByID (0x00194300 + 0x80);
 
 /*
@@ -177,37 +218,95 @@ SkyrimSE.exe+287477 - E8 B451F6FF           - call SkyrimSE.exe+1EC630
 SkyrimSE.exe+28747C - EB 26                 - jmp SkyrimSE.exe+2874A4
 SkyrimSE.exe+28747E - 49 8B D6              - mov rdx,r14
 SkyrimSE.exe+287481 - 48 8D 4C 24 48        - lea rcx,[rsp+48]
-SkyrimSE.exe+287486 - E8 651FF5FF           - call SkyrimSE.exe+1D93F0                               | < ====== ctor
+SkyrimSE.exe+287486 - E8 651FF5FF           - call SkyrimSE.exe+1D93F0                               | < ====== ctor SkyrimSE.exe+1D93F0
 SkyrimSE.exe+28748B - 90                    - nop
 SkyrimSE.exe+28748C - 49 8B D7              - mov rdx,r15
 SkyrimSE.exe+28748F - 48 8D 4C 24 48        - lea rcx,[rsp+48]
 SkyrimSE.exe+287494 - E8 9751F6FF           - call SkyrimSE.exe+1EC630
 SkyrimSE.exe+287499 - 90                    - nop
 SkyrimSE.exe+28749A - 48 8D 4C 24 48        - lea rcx,[rsp+48]
-SkyrimSE.exe+28749F - E8 3C20F5FF           - call SkyrimSE.exe+1D94E0                               |< ======= dtor
+SkyrimSE.exe+28749F - E8 3C20F5FF           - call SkyrimSE.exe+1D94E0                               |< ======= dtor SkyrimSE.exe+1D94E0
 SkyrimSE.exe+2874A4 - 41 8B 47 40           - mov eax,[r15+40]
 */
-RelocAddr<ECCData_ctor_t*>  ECCData_ctor (0x001D9330 + 0x80);
-RelocAddr<ECCData_dtor_t*>  ECCData_dtor (0x001D9420 + 0x80);
+RelocAddr<ECCData_ctor_t*>  ECCData_ctor (0x001D93F0); // 1_5_53
+RelocAddr<ECCData_dtor_t*>  ECCData_dtor (0x001D94E0); // 1_5_53
 
-// 33 FF 44 8B E7 48 8B 49 08 0F B7 D7 66 89 55 40 48 85 C9 74 15 8B C7 80 79 1A 3E -0x32
+/*
+Ref:
+33 FF 44 8B E7 48 8B 49 08 0F B7 D7 66 89 55 40 48 85 C9 74 15 8B C7 80 79 1A 3E
+-0x32
+
+1_5_53 NOTES:
+
+TODO
+*/
+
 RelocAddr<ECCData_InitContainer_t*> ECCData_InitContainer (0x001E9E70 + 0x80);
 
-// 65 48 8B 04 25 58 00 00 00 B9 68 07 00 00 4E 8B 34 C0 4C 03 F1 41 8B 3E 89 7C 24 60 41 C7 06 61 00 00 00 49 8D 5F 10 48 89 5C 24 68 48 8B CB
-// first entry
+
+/*
+Ref:
+65 48 8B 04 25 58 00 00 00 B9 68 07 00 00 4E 8B 34 C0 4C 03 F1 41 8B 3E 89 7C 24 60 41 C7 06 61 00 00 00 49 8D 5F 10 48 89 5C 24 68 48 8B CB
+first entry
+
+1_5_53 NOTES:
+
+TODO
+*/
 RelocAddr<BaseExtraList_SetInventoryChanges_t*> BaseExtraList_SetInventoryChanges (0x0010F6C0 + 0x80);
 
-// 48 85 FF 74 06 0F B7 47 10 EB 05 B8 01 00 00 00 48 8B 5C 24 48 48 83 C4 30 5F C3 -0x47
+
+/*
+Ref:
+48 85 FF 74 06 0F B7 47 10 EB 05 B8 01 00 00 00 48 8B 5C 24 48 48 83 C4 30 5F C3
+-0x47
+
+1_5_53 NOTES:
+
+TODO
+*/
 RelocAddr<BaseExtraList_GetItemCount_t*>	    BaseExtraList_GetItemCount (0x001138B0 + 0x80);
 
-// 48 8B 59 08 48 85 DB 74 22 48 8B 1B 48 85 DB 74 1A 48 8B CB (first match)
+/*
+Ref:
+48 8B 59 08 48 85 DB 74 22 48 8B 1B 48 85 DB 74 1A 48 8B CB
+first match
+
+1_5_53 NOTES:
+
+TODO
+*/
 RelocAddr<InventoryEntryData_GetOwner_t*>		 InventoryEntryData_GetOwner (0x001D6750 + 0x80);
 
-// 48 8B F0 48 85 C0 75 04 48 8B 73 40 33 C0 80 7E 1A 2B 48 0F 44 C6 48 3B EE 0F 84 80 00 00 00 80 7D 1A 0B -0x4D
+/*
+Ref:
+48 8B F0 48 85 C0 75 04 48 8B 73 40 33 C0 80 7E 1A 2B 48 0F 44 C6 48 3B EE 0F 84 80 00 00 00 80 7D 1A 0B
+-0x4D
+
+1_5_53 NOTES:
+
+TODO
+*/
 RelocAddr<InventoryEntryData_IsOwnedBy_t*>		InventoryEntryData_IsOwnedBy (0x001D76C0 + 0x80);
 
-// 48 8B 59 08 40 32 FF 48 85 DB 74 4A 48 89 74 24 30 0F 1F 44 00 00 48 83 7B 08 00 75 06 -0xA
+/*
+Ref:
+48 8B 59 08 40 32 FF 48 85 DB 74 4A 48 89 74 24 30 0F 1F 44 00 00 48 83 7B 08 00 75 06
+-0xA
+
+1_5_53 NOTES:
+
+TODO
+*/
 RelocAddr<InventoryEntryData_IsQuestItem_t*>    InventoryEntryData_IsQuestItem (0x001D6CD0 + 0x80);
 
-// 49 89 5B 10 49 89 73 18 33 C0 49 89 43 D8 -0x10
+/*
+Ref:
+49 89 5B 10 49 89 73 18 33 C0 49 89 43 D8
+-0x10
+
+1_5_53 NOTES:
+
+TODO
+*/
 RelocAddr<MagicItem_GetCostliestEffectItem_t*>	 MagicItem_GetCostliestEffectItem (0x00101DC0 + 0x80);
