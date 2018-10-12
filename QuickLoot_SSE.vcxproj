@@ -165,24 +165,7 @@
     <ClInclude Include="Interfaces.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\skse64\GameAPI.cpp" />
-    <ClCompile Include="..\skse64\GameBSExtraData.cpp" />
-    <ClCompile Include="..\skse64\GameData.cpp" />
-    <ClCompile Include="..\skse64\GameExtraData.cpp" />
-    <ClCompile Include="..\skse64\GameFormComponents.cpp" />
-    <ClCompile Include="..\skse64\GameForms.cpp" />
-    <ClCompile Include="..\skse64\GameMenus.cpp" />
-    <ClCompile Include="..\skse64\GameReferences.cpp" />
-    <ClCompile Include="..\skse64\GameRTTI.cpp" />
     <ClCompile Include="..\skse64\GameSettings.cpp" />
-    <ClCompile Include="..\skse64\GameTypes.cpp" />
-    <ClCompile Include="..\skse64\GameUtilities.cpp" />
-    <ClCompile Include="..\skse64\HashUtil.cpp" />
-    <ClCompile Include="..\skse64\NiNodes.cpp" />
-    <ClCompile Include="..\skse64\ScaleformAPI.cpp" />
-    <ClCompile Include="..\skse64\ScaleformState.cpp" />
-    <ClCompile Include="..\skse64\ScaleformTypes.cpp" />
-    <ClCompile Include="..\skse64\ScaleformValue.cpp" />
     <ClCompile Include="GameFunctions.cpp" />
     <ClCompile Include="ItemData.cpp" />
     <ClCompile Include="QuickLoot.cpp" />
@@ -191,6 +174,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\common\common_vc14.vcxproj">
       <Project>{472e19ab-def0-42df-819b-18722e8dc822}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\skse64\skse64.vcxproj">
+      <Project>{7028b79c-06e3-4d9a-b38c-1dc3680b1bdb}</Project>
     </ProjectReference>
     <ProjectReference Include="..\skse64_common\skse64_common.vcxproj">
       <Project>{5fd1c08d-db80-480c-a1c6-f0920005cd13}</Project>

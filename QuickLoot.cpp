@@ -6,6 +6,7 @@
 #include "skse64\Hooks_UI.h"
 #include "skse64\GameMenus.h"
 #include "skse64\GameSettings.h"
+#include "skse64/ScaleformLoader.h"
 
 #include "Interfaces.h"
 #include "GameFunctions.h"
@@ -25,13 +26,6 @@ public:
 	tList<UInt32>	handles;	// 08
 private:
 };
-
-GFxLoader * GetGfxSingleton()
-{
-	// 4E9F39D1066653EF254B38406212E476F80A6C9B+AE
-	RelocPtr<GFxLoader*> g_GFxLoader(0x02F3ECF8);
-	return *g_GFxLoader;
-}
 
 class LootMenuUIDelegate : public UIDelegate_v1
 {
@@ -245,9 +239,9 @@ QuickLootMenu::QuickLootMenu(const char* swfPath)
 	};
 
 
-	auto mvloader = GetGfxSingleton();
+	auto mvloader = GFxLoader::GetSingleton();
 	if (!mvloader) D_MSG("mvloader == NULL"); else D_MSG("mvloader != NULL");
-	if (mvloader && CALL_MEMBER_FN(mvloader, LoadMovie)(this, &view, swfPath, 1, 1.0f))
+	if (CALL_MEMBER_FN(mvloader, LoadMovie)(this, &view, swfPath, 1, 1.0f))
 	{
 		_MESSAGE("  loaded Inteface/%s.swf successfully", swfPath);
 
@@ -258,7 +252,7 @@ QuickLootMenu::QuickLootMenu(const char* swfPath)
 
 IMenu* QuickLootMenu::Create(void)
 {
-	void* p = ScaleformHeap_Allocate(sizeof(IMenu));
+	void* p = ScaleformHeap_Allocate(sizeof(QuickLootMenu));
 	if (p)
 	{
 		IMenu* menu = new (p) QuickLootMenu("LootMenu");
