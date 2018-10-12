@@ -241,7 +241,7 @@ QuickLootMenu::QuickLootMenu(const char* swfPath)
 
 	auto mvloader = GFxLoader::GetSingleton();
 	if (!mvloader) D_MSG("mvloader == NULL"); else D_MSG("mvloader != NULL");
-	if (CALL_MEMBER_FN(mvloader, LoadMovie)(this, &view, swfPath, 1, 1.0f))
+	if (mvloader && CALL_MEMBER_FN(mvloader, LoadMovie)(this, &view, swfPath, 1, 1.0f))
 	{
 		_MESSAGE("  loaded Inteface/%s.swf successfully", swfPath);
 
